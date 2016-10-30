@@ -1,0 +1,51 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{979DCB9C-52C8-4953-889D-58CEFD3BCC2B}"
+	ProjectSection(SolutionItems) = preProject
+		global.json = global.json
+	EndProjectSection
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "kwd.keepass", "..\..\src\kwd.keepass\kwd.keepass.xproj", "{3A4BA3C8-EB93-48F9-8C1B-99DA491ED255}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "KeePass", "KeePass", "{676E289B-7897-486C-B532-F3D8F94DC1F2}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Kwd.Base", "src\Kwd.Base\Kwd.Base.xproj", "{D8A70627-F512-4B15-B7DC-4D310BDBAFF0}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Kwd.Base.Tests", "test\Kwd.Base.Tests\Kwd.Base.Tests.xproj", "{F7BA3EED-3912-4D2E-B540-B5BBEDBEC9EF}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "kwd.keepass.tests", "..\..\test\kwd.keepass.tests\kwd.keepass.tests.xproj", "{2BABE604-1849-42FA-8BAC-EA19E312803F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3A4BA3C8-EB93-48F9-8C1B-99DA491ED255}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3A4BA3C8-EB93-48F9-8C1B-99DA491ED255}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3A4BA3C8-EB93-48F9-8C1B-99DA491ED255}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3A4BA3C8-EB93-48F9-8C1B-99DA491ED255}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D8A70627-F512-4B15-B7DC-4D310BDBAFF0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D8A70627-F512-4B15-B7DC-4D310BDBAFF0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D8A70627-F512-4B15-B7DC-4D310BDBAFF0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D8A70627-F512-4B15-B7DC-4D310BDBAFF0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F7BA3EED-3912-4D2E-B540-B5BBEDBEC9EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F7BA3EED-3912-4D2E-B540-B5BBEDBEC9EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F7BA3EED-3912-4D2E-B540-B5BBEDBEC9EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F7BA3EED-3912-4D2E-B540-B5BBEDBEC9EF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2BABE604-1849-42FA-8BAC-EA19E312803F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2BABE604-1849-42FA-8BAC-EA19E312803F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2BABE604-1849-42FA-8BAC-EA19E312803F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2BABE604-1849-42FA-8BAC-EA19E312803F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{3A4BA3C8-EB93-48F9-8C1B-99DA491ED255} = {676E289B-7897-486C-B532-F3D8F94DC1F2}
+		{2BABE604-1849-42FA-8BAC-EA19E312803F} = {676E289B-7897-486C-B532-F3D8F94DC1F2}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,16 @@
+{
+  "version": "0.1.0",
+
+  "dependencies": {
+    "NETStandard.Library": "1.6.0",
+
+    "Microsoft.Extensions.Logging": "1.0.0",
+
+    "Microsoft.Extensions.Configuration.FileExtensions": "1.0.0",
+
+    "KeePassLib": "2.30.0"
+  },
+  "frameworks": {
+    "net451": {}
+  }
+}

@@ -1,0 +1,24 @@
+﻿{
+  "version": "0.1.0",
+  "testRunner": "xunit",
+  "buildOptions": {
+    "copyToOutput": ["data/*"]
+  },
+  
+  "dependencies": {
+    "NETStandard.Library": "1.6.0",
+
+    "xunit": "2.2.0-*",
+    "dotnet-test-xunit": "2.2.0-*",
+
+    "kwd.keepass": {
+      "version": "0.1.0",
+      "type": "build",
+      "target": "project"
+    }
+  },
+
+  "frameworks": {
+    "net451": {}
+  }
+}

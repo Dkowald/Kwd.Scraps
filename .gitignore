@@ -1,0 +1,11 @@
+
+#Build artifacts
+**/obj
+**/bin
+**/project.lock.json
+
+#VStudio
+**/.vs/*
+*.suo
+*.usr
+*.user

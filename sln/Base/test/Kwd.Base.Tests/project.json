@@ -1,0 +1,25 @@
+﻿{
+  "version": "1.0.0-*",
+
+  "dependencies": {
+    "NETStandard.Library": "1.6.0",
+
+    "Kwd.Base": {
+      "version": "1.0.0",
+      "type": "build",
+      "target": "project"
+    },
+
+    "kwd.keepass.tests": {
+      "version": "0.1.0",
+      "type": "build",
+      "suppressParent": "all",
+      "include": "all",
+      "target": "project"
+    }
+  },
+
+  "frameworks": {
+    "net46" :  {} 
+  }
+}
