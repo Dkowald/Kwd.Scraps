@@ -3,6 +3,7 @@ using System.IO;
 using KeePassLib.Keys;
 using KeePassLib.Serialization;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 
 namespace kwd.keepass
 {
@@ -15,12 +16,13 @@ namespace kwd.keepass
     public class KeepassConfigurationOptions
     {
         public const string FileExtension = "kdbx";
-
+        
         public KeepassConfigurationOptions()
         {
             IgnoreCaseForKeys = true;
             CreateIfMissing = false;
             RootSection = ConfigurationPath.KeyDelimiter;
+            
         }
 
         public KeepassConfigurationOptions(string fileName, string masterPassword, string keyFile, bool createIfMissing = false, string rootGroup = ":")
@@ -90,6 +92,8 @@ namespace kwd.keepass
 
         public bool IgnoreCaseForKeys { get; set; }
 
+        public ILoggerFactory Logger { get; set; }
+
         /// <summary>
         /// Create an access key for the Db
         /// </summary>
@@ -122,12 +126,15 @@ namespace kwd.keepass
         public bool DeleteAccessKey()
         {
             if (!File.Exists(KeyFile)) { return false; }
+            
+            Logger?.CreateLogger(GetType().FullName)
+                ?.LogInformation($"Deleting key file : '{KeyFile}'");
 
             File.Delete(KeyFile);
 
             return true;
         }
-
+        
         public class NoCredentialsProvided : Exception
         {
             public NoCredentialsProvided()
@@ -140,6 +147,10 @@ namespace kwd.keepass
 
             var entropy = new byte[1024];
             new Random().NextBytes(entropy);
+
+            var log = Logger?.CreateLogger(GetType().FullName);
+            log?.LogWarning("Generating keyfile: '{KeyFile}'", KeyFile);
+            log?.LogInformation("The generated key file should be kept safe");
 
             KcpKeyFile.Create(KeyFile, entropy);
         }

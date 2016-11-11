@@ -1,13 +1,45 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using kwd.keepass;
+using kwd_keepass.tests.TestHelpers;
 using KeePassLib.Keys;
+using Microsoft.Extensions.Logging;
 using Xunit;
 
 namespace kwd_keepass.tests
 {
     public class KeepassConfigurationOptionsTests
     {
+        [Fact]
+        public void CreateAccessKey_LogCreation()
+        {
+            var keyPath = Files.DataPath("newKey.key");
+
+            File.Delete(keyPath);
+
+            var memLog = new TestLoggerProvider();
+
+            using (var logFactory = new LoggerFactory())
+            {
+                logFactory.AddProvider(memLog);
+                
+                var target = new KeepassConfigurationOptions
+                {
+                    CreateIfMissing = true,
+                    KeyFile = keyPath,
+                    Logger = logFactory
+                };
+
+                target.CreateAccessKey();
+
+                var data = memLog.Entries
+                    .FirstOrDefault(x => x.Name == typeof(KeepassConfigurationOptions).FullName);
+
+                Assert.NotNull(data);
+            }
+        }
+
         [Fact]
         public void Ctor_NoCredentials()
         {
@@ -19,14 +51,14 @@ namespace kwd_keepass.tests
         [Fact]
         public void CreateAccessKey_WhenKeyFileExists()
         {
-            var keyFile = TestHelpers.Files.DataPath("existingKey.key");
+            var keyFile = Files.DataPath("existingKey.key");
             const string keyText = "Sample keyfile text";
 
             File.WriteAllText(keyFile, keyText);
 
             var target = new KeepassConfigurationOptions
             {
-                KeyFile = TestHelpers.Files.GetExistingKeyPath(),
+                KeyFile = Files.GetSampleMasterKeyPath(),
                 CreateIfMissing = true
             };
 

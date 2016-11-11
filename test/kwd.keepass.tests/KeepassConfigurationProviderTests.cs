@@ -8,18 +8,20 @@ namespace kwd_keepass.tests
         [Fact]
         public void Load_FindsItemsInChildGroups()
         {
-            var source = new KeepassConfigurationSource(new KeepassConfigurationOptions
+            var options = new KeepassConfigurationOptions
             {
                 CreateIfMissing = false,
                 MasterPassword = "a",
                 FileName = TestHelpers.Files.TestDb(),
-            }); 
+            };
 
-            var target = new KeepassConfigurationProvider(source);
+            var source = new KeepassConfigurationSource(options); 
+            
+            var target = new KeepassConfigurationProvider(source,  options);
 
             target.Load();
 
-            var username = "";
+            string username;
             Assert.True(target.TryGet("App1:DbStore:UserName", out username));
 
             Assert.Equal("Admin", username);
@@ -36,11 +38,11 @@ namespace kwd_keepass.tests
                 RootSection = "App1"
             });
 
-            var target = new KeepassConfigurationProvider(source);
+            var target = source.Build();
            
             target.Load();
 
-            var username = "";
+            string username;
 
             Assert.True(target.TryGet("DbStore:Username", out username));
 

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO;
 using KeePassLib;
-using KeePassLib.Interfaces;
 using KeePassLib.Serialization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
@@ -11,29 +10,27 @@ namespace kwd.keepass
     public class KeepassConfigurationSource : FileConfigurationSource
     {
         private readonly KeepassConfigurationOptions _options;
-        private readonly ILoggerFactory _logFactory;
         private readonly ILogger _log;
 
-        public KeepassConfigurationSource(KeepassConfigurationOptions options, ILoggerFactory logFactory = null)
+        public KeepassConfigurationSource(KeepassConfigurationOptions options)
         {
             if (options == null) { throw new ArgumentNullException(nameof(options)); }
 
-            _log = logFactory?.CreateLogger(GetType().FullName) ?? new NullLogger();
+            _log = options.Logger?.CreateLogger(GetType().FullName);
 
             _options = options;
-            _logFactory = logFactory;
         }
 
         public override IConfigurationProvider Build(IConfigurationBuilder builder)
         {
-            //todo: Check options are good, and db access is ok.
-
-            return new KeepassConfigurationProvider(this);
+            return new KeepassConfigurationProvider(this, _options);
         }
+
+        public KeepassConfigurationProvider Build() => new KeepassConfigurationProvider(this, _options);
 
         public PwGroup GetRoot(PwDatabase db)
         {
-            if (String.IsNullOrEmpty(_options.RootSection) || _options.RootSection == ConfigurationPath.KeyDelimiter)
+            if (string.IsNullOrEmpty(_options.RootSection) || _options.RootSection == ConfigurationPath.KeyDelimiter)
             { return db.RootGroup; }
 
             var result = db.RootGroup.FindCreateSubTree(_options.RootSection, new[] { ConfigurationPath.KeyDelimiter }, _options.CreateIfMissing);
@@ -52,10 +49,10 @@ namespace kwd.keepass
             {
                 CreateNew();
             }
-            
-            db.Open(IOConnectionInfo.FromPath(_options.FileName), key, new NullStatusLogger());
+               
+            db.Open(IOConnectionInfo.FromPath(_options.FileName), key, KeepassStatusLogger.SelectLoggerStrategy(_log));
 
-            return new KeePassDbSession(db);
+            return new KeePassDbSession(KeepassStatusLogger.SelectLoggerStrategy<KeePassDbSession>(_options), db);
         }
         
         /// <summary>
@@ -68,6 +65,8 @@ namespace kwd.keepass
         public bool Delete()
         {
             if (!File.Exists(_options.FileName)) { return false; }
+
+            _log?.LogInformation($"Deleting database: {_options.FileName}");
 
             File.Delete(_options.FileName);
 
@@ -82,8 +81,10 @@ namespace kwd.keepass
             var src = IOConnectionInfo.FromPath(_options.FileName);
             newDb.New(src, key);
 
-            newDb.Save(new NullStatusLogger());
+            newDb.Save(KeepassStatusLogger.SelectLoggerStrategy(_log));
             newDb.Close();
+
+            _log?.LogWarning("Creating database : '{FileName}', be sure to store it safely", _options.FileName);
         }
     }
 }

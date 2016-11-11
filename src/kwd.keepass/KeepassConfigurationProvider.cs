@@ -3,16 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using KeePassLib;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 
 namespace kwd.keepass
 {
     public class KeepassConfigurationProvider : ConfigurationProvider
     {
         private readonly KeepassConfigurationSource _source;
+        private readonly ILogger _log;
 
-        public KeepassConfigurationProvider(KeepassConfigurationSource source)
+        public KeepassConfigurationProvider(KeepassConfigurationSource source, KeepassConfigurationOptions options)
         {
             _source = source;
+
+            _log = options.Logger?.CreateLogger(GetType().FullName);
         }
 
         public override void Load()
@@ -21,6 +25,8 @@ namespace kwd.keepass
             {
                 var root = _source.GetRoot((PwDatabase)wrappedDb);
                 
+                _log.LogInformation("Loading secrets starting at root: '{rootName}'", root.Name);
+
                 Data = LoadGroup(root).ToDictionary(k => k.Key, v => v.Value);
             }
         }

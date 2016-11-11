@@ -15,10 +15,13 @@ namespace kwd.keepass
         private readonly PwDatabase _db;
         private readonly IStatusLogger _logger;
 
-        public KeePassDbSession(PwDatabase db, bool saveOnClose = true, IStatusLogger logger = null)
+        public KeePassDbSession(IStatusLogger logger, PwDatabase db, bool saveOnClose = true)
         {
+            if (logger == null) { throw new ArgumentNullException(nameof(logger));}
+            if (db == null) { throw new ArgumentNullException(nameof(db));}
+
             _db = db;
-            _logger = logger ?? new NullStatusLogger();
+            _logger = logger;
             SaveOnClose = saveOnClose;
         }
 
@@ -33,6 +36,8 @@ namespace kwd.keepass
                 if (SaveOnClose) { _db.Save(_logger); }
 
                 _db.Close();
+
+                _logger.SetText("Database closed", LogStatusType.AdditionalInfo);
             }
         }
 
