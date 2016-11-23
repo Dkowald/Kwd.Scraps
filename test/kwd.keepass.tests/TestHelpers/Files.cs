@@ -17,7 +17,6 @@ namespace kwd_keepass.tests.TestHelpers
 
             return path;
         }
-            
 
         public static string TestDb() =>
             Path.Combine(CodePath(), "TestHelpers", "testDb.kdbx");

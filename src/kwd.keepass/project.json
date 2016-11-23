@@ -8,6 +8,8 @@
 
     "Microsoft.Extensions.Configuration.FileExtensions": "1.0.0",
 
+    "Microsoft.Extensions.Caching.Abstractions": "1.0.0",
+
     "KeePassLib": "2.30.0"
   },
   "frameworks": {

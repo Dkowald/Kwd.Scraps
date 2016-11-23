@@ -9,3 +9,5 @@
 *.suo
 *.usr
 *.user
+
+**/kwd.keepass.tests/data/**

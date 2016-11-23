@@ -22,7 +22,6 @@ namespace kwd.keepass
             IgnoreCaseForKeys = true;
             CreateIfMissing = false;
             RootSection = ConfigurationPath.KeyDelimiter;
-            
         }
 
         public KeepassConfigurationOptions(string fileName, string masterPassword, string keyFile, bool createIfMissing = false, string rootGroup = ":")
@@ -94,6 +93,18 @@ namespace kwd.keepass
 
         public ILoggerFactory Logger { get; set; }
 
+        /// <summary>
+        /// When true, attempts to laod expired entries fail,
+        /// recording a log entry to report the problem.
+        /// </summary>
+        public bool ErrorIfExpiredEntry { get; set; }
+
+        /// <summary>
+        /// Log a warning on the first attempt (since inital load) to read an entry
+        /// that is scheduled to expire within X days.
+        /// </summary>
+        public int WarnIfExpireWithinDays { get; set; }
+        
         /// <summary>
         /// Create an access key for the Db
         /// </summary>
