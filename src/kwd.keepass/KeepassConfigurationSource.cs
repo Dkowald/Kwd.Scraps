@@ -33,6 +33,11 @@ namespace kwd.keepass
 
         public PwGroup GetRoot(PwDatabase db)
         {
+            while (_options.RootSection?.StartsWith(ConfigurationPath.KeyDelimiter) == true)
+            {
+                _options.RootSection = _options.RootSection.Substring(ConfigurationPath.KeyDelimiter.Length);
+            }
+            
             if (string.IsNullOrEmpty(_options.RootSection) || _options.RootSection == ConfigurationPath.KeyDelimiter)
             { return db.RootGroup; }
 
